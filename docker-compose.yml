@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+  cakephp-app:
+    container_name: cakephp-app
+    build: .
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 8080:80
+
+  postgres:
+    image: postgres
+    container_name: cakephp-db
+    volumes:
+      - ./scripts/01-create-tables.sql:/docker-entrypoint-initdb.d/01-create-tables.sql
+    environment:
+      POSTGRES_PASSWORD: 'root'
+    ports:
+      - 5432:5432
